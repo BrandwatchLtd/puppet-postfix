@@ -12,7 +12,7 @@ class postfix::cf (
   
   file { "${tempdir}":
     ensure => directory,
-    owner => 'postfix'
+    mode   => "0777"
   }->
   # creating configuration files in them directory
   # and checking the syntax
