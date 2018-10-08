@@ -8,8 +8,10 @@ class postfix (
   $dirname = tempdir('postfix-cf')
   anchor { 'postfix::begin': }
   class { '::postfix::install': }
-  -> class { '::postfix::config':
-    tempdir => $dirname,
+  -> class { '::postfix::cf':
+     main    => $cf['main'],
+     master  => $cf['master'],
+     tempdir => $dirname,
   }
  -> class { '::postfix::service': }
   anchor { 'postfix::end': }
