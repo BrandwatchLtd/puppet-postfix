@@ -23,7 +23,8 @@ class postfix::cf (
   exec { 'check-main.cf':
     command     => "/usr/sbin/postconf -df -c ${tempdir}",
     subscribe   => File["${tempdir}/main.cf"],
-    refreshonly => true
+    refreshonly => true,
+    onlyif      => '/usr/bin/which postconf'
   }
   file { "${tempdir}/master.cf":
     ensure  => file,
@@ -33,6 +34,7 @@ class postfix::cf (
     command     => "/usr/sbin/postconf -Mf -c ${tempdir} && /usr/sbin/postconf -Mf -c ${tempdir} > ${tempdir}/master.cf.new", 
     subscribe   => File["${tempdir}/master.cf"],
     refreshonly => true,
+    onlyif      => '/usr/bin/which postconf'
   }
 
   # if they looked fine push them to postfix directory
